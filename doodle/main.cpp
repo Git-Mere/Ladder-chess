@@ -197,6 +197,7 @@ int main()
             default: break;
         }
     }
+    return 0;
 }
 
 void on_key_released(KeyboardButtons button)
