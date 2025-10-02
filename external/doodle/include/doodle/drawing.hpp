@@ -1,5 +1,5 @@
 ﻿/*--------------------------------------------------------------*
-  Copyright (C) 2019 Rudy Castan
+  Copyright (C) 2021 Rudy Castan
 
   This file is distributed WITHOUT ANY WARRANTY. See the file
   `License.md' for details.
@@ -916,6 +916,36 @@ namespace doodle
      *
      */
     void apply_matrix(double a, double b, double c, double d, double e, double f) noexcept;
+
+    /** @} */
+
+    /**
+     *  * \addtogroup Image
+     *  Functions for drawing to an Image.
+     *  @{
+     */
+
+    /**
+     * \brief Redirect all draw command to draw to an image
+     * \param image_width The desired width of the image
+     * \param image_height The desired height of the image
+     * \param apply_antialiasing Should multi-sample anti-aliasing be applied?
+     *
+     * \include begin_drawing_to_image.cpp
+     *
+     */
+    void begin_drawing_to_image(int image_width, int image_height, bool apply_antialiasing = true);
+
+    /**
+     * \brief End a session of drawing to an image
+     * \param smooth_texture Should the texture use a smooth filtering when being drawn
+     * \return An Image representing what was drawn.
+     *
+     * \include end_drawing_to_image.cpp
+     *
+     */
+    Image end_drawing_to_image(bool smooth_texture = false);
+
     /** @} */
 
 }

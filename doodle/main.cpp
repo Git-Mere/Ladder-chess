@@ -1,4 +1,4 @@
-﻿// Name              : Seungheon Jeon, Sangbeom Kim, Sehun Kim
+// Name              : Seungheon Jeon, Sangbeom Kim, Sehun Kim
 // Assignment Name   : Game Prototype 1
 // Course            : CS120
 // Term & Year       : fall/2020
@@ -14,28 +14,34 @@
 #include <vector>
 #include <string>
 
+// Workaround for doodle library version mismatch causing a linker error.
+// The Image class uses a PImpl, so a default destructor is safe and sufficient.
+//doodle::Image::~Image() = default;
+
 using namespace doodle;
 using namespace std;
 using namespace Tool;
 
 constexpr void make_board();
 
+
+
 int main()
 {
     create_window("Team Protosstype", windowWidth, windowHeight);
     make_space();
 
-    const Image DigiPen{"Image/DigiPen.png"};
-    const Image kiyeong1{"Image/kiyeong1.png"};
-    const Image kiyeong2{"Image/kiyeong2.png"};
-    const Image kiyeong3{"Image/kiyeong3.png"};
-    const Image davi1{"Image/davi1.png"};
-    const Image davi2{"Image/davi2.png"};
-    const Image davi3{"Image/davi3.png"};
-    const Image LadderChess{"Image/Ladder Chess.png"};
-    const Image main_k{"Image/main_k.png"};
-    const Image main_d{"Image/main_d.png"};
-    const Image How{"Image/How to Play.png"};
+    const Image DigiPen{ "Image/DigiPen.png" };
+    const Image kiyeong1{ "Image/kiyeong1.png" };
+    const Image kiyeong2{ "Image/kiyeong2.png" };
+    const Image kiyeong3{ "Image/kiyeong3.png" };
+    const Image davi1{ "Image/davi1.png" };
+    const Image davi2{ "Image/davi2.png" };
+    const Image davi3{ "Image/davi3.png" };
+    const Image LadderChess{ "Image/Ladder Chess.png" };
+    const Image main_k{ "Image/main_k.png" };
+    const Image main_d{ "Image/main_d.png" };
+    const Image How{ "Image/How to Play.png" };
 
     double time{0};
     double alp{10};
@@ -191,8 +197,10 @@ int main()
                 set_font_size(15);
                 pop_settings();
                 break;
+
+            case QUIT: 
+                close_window(); 
                 break;
-            case QUIT: close_window(); break;
 
             default: break;
         }

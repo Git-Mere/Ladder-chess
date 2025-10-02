@@ -1,10 +1,22 @@
 /*--------------------------------------------------------------*
-  Copyright (C) 2019 Rudy Castan
+  Copyright (C) 2021 Rudy Castan
 
   This file is distributed WITHOUT ANY WARRANTY. See the file
   `License.md' for details.
 *--------------------------------------------------------------*/
 #pragma once
+
+#include <doodle/angle.hpp>
+#include <doodle/color.hpp>
+#include <doodle/drawing.hpp>
+#include <doodle/environment.hpp>
+#include <doodle/eventhook.hpp>
+#include <doodle/image.hpp>
+#include <doodle/input.hpp>
+#include <doodle/noise.hpp>
+#include <doodle/random.hpp>
+#include <doodle/version.hpp>
+#include <doodle/window.hpp>
 
 /**
  * \mainpage
@@ -98,6 +110,8 @@
  *      \subsection creating Creating Images
  *          - doodle::Image
  *          - capture_screenshot_to_image()
+ *          - begin_drawing_to_image()
+ *          - end_drawing_to_image()
  *      \subsection display Displaying Images
  *          - draw_image()
  *          - set_tint_color()
@@ -129,15 +143,3 @@
  *      - to_wstring()
  *
  */
-
-#include <doodle/angle.hpp>
-#include <doodle/color.hpp>
-#include <doodle/drawing.hpp>
-#include <doodle/environment.hpp>
-#include <doodle/eventhook.hpp>
-#include <doodle/image.hpp>
-#include <doodle/input.hpp>
-#include <doodle/noise.hpp>
-#include <doodle/random.hpp>
-#include <doodle/version.hpp>
-#include <doodle/window.hpp>

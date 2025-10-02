@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------*
-  Copyright (C) 2019 Rudy Castan
+  Copyright (C) 2021 Rudy Castan
 
   This file is distributed WITHOUT ANY WARRANTY. See the file
   `License.md' for details.
@@ -9,5 +9,5 @@
 
 namespace doodle
 {
-    constexpr auto VERSION = "0.1.0";
+    constexpr auto VERSION = "0.2.5";
 }

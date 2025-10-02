@@ -1,5 +1,5 @@
 ﻿/*--------------------------------------------------------------*
-  Copyright (C) 2019 Rudy Castan
+  Copyright (C) 2021 Rudy Castan
 
   This file is distributed WITHOUT ANY WARRANTY. See the file
   `License.md' for details.
@@ -7,6 +7,7 @@
 #pragma once
 
 #include <filesystem>
+#include <memory>
 
 namespace doodle
 {
@@ -82,43 +83,6 @@ namespace doodle
          * must have already been called.
          */
         Image();
-        /**
-         * \brief Destructor
-         *
-         * Release all image resources
-         *
-         * \warning This will likely fail if the instance is in a global scope because the GPU connection will have
-         * already been disconnected when the program shuts down.
-         */
-        ~Image();
-        /**
-         * \brief One cannot copy an Image object
-         *
-         *  Images take up a lot of memory in your application and on the GPU, so we don't want to duplicate them.
-         *
-         */
-        Image(const Image&) = delete;
-        /**
-         * \brief One cannot copy an Image object
-         *
-         * Images take up a lot of memory in your application and on the GPU, so we don't want to duplicate them.
-         *
-         */
-        Image& operator=(const Image&) = delete;
-        /**
-         * \brief Image can be moved
-         *
-         * Since move resources around doesn't duplicate them, it is okay to move them with r-value references.
-         *
-         */
-        Image(Image && other) noexcept;
-        /**
-         * \brief Image can be moved
-         *
-         * Since move resources around doesn't duplicate them, it is okay to move them with r-value references.
-         *
-         */
-        Image& operator=(Image&& other) noexcept;
 
         /**
          * \brief Lists all of the supported image file formats
@@ -168,29 +132,6 @@ namespace doodle
         bool IsSmooth() const noexcept;
 
         /**
-         * \brief struct to represent the colors of the Image.
-         */
-        struct color
-        {
-            using byte = unsigned char;
-            byte red = 0, green = 0, blue = 0, alpha = 255;
-
-            /**
-             * \brief Defaults to black
-             */
-            color() = default;
-            /**
-             * \brief Can be constructed from a Color object
-             * \param c Color object
-             */
-            color(const doodle::Color& c) noexcept;
-            /**
-             * \brief Can be implicitly converted to a Color object
-             */
-            operator doodle::Color() const noexcept;
-        };
-
-        /**
          * \brief Get a specific color from the image
          * \param index Should be 0 \f$\leq\f$ index \f$<\f$ GetNumberOfColors()
          * \return a copy of the color at that position
@@ -198,7 +139,7 @@ namespace doodle
          *
          *
          */
-        color operator[](int index) const;
+        Color operator[](int index) const;
         /**
          * \brief Get a specific color from the image, so that you can change the image contents.
          * Usage of this will trigger creating a new GPU texture when the Image is drawn via draw_image().
@@ -208,7 +149,7 @@ namespace doodle
          *
          *
          */
-        color& operator[](int index);
+        Color& operator[](int index);
 
         /**
          * \brief Get a specific color from the image
@@ -219,7 +160,7 @@ namespace doodle
          *
          *
          */
-        color operator()(int column, int row) const;
+        Color operator()(int column, int row) const;
         /**
          * \brief Get a specific color from the image, so that you can change the image contents.
          * Usage of this will trigger creating a new GPU texture when the Image is drawn via draw_image().
@@ -230,66 +171,78 @@ namespace doodle
          *
          *
          */
-        color& operator()(int column, int row);
+        Color& operator()(int column, int row);
 
         /**
          * \brief Returns an iterator to the first color of the Image.
          *
          * Usage of this will trigger creating a new GPU texture when the Image is drawn via draw_image().
          *
-         * Having a begin/end interface enables the Image class to be used with for range loops and the std <algorithm>
+         * Having a begin/end interface enables the Image class to be used with for range loops and the std `<algorithm>`
          * functions.
          *
          * \return iterator to the first element
          *
          *
          */
-        color* begin();
+        Color* begin();
         /**
-         * \brief
-         * \return
+         * \brief Returns an iterator to the color following the last color of the Image.
+         *
+         * This color acts as a placeholder; attempting to access it results in undefined behavior.
+         *
+         * Having a begin/end interface enables the Image class to be used with for range loops and the std
+         * `<algorithm>` functions.
+         *
+         * \return iterator to a color following the last color
          *
          *
          */
-        color* end();
+        Color* end();
 
         /**
          * \brief Returns a const iterator to the first color of the Image.
          *
-         * Having a begin/end interface enables the Image class to be used with for range loops and the std <algorithm>
+         * Having a begin/end interface enables the Image class to be used with for range loops and the std `<algorithm>`
          * functions.
          *
          * \return const iterator to the first element
          *
          *
+         * \include ImageClass_begin_const.cpp
+         *
          */
-        const color* begin() const;
+        const Color* begin() const;
         /**
          * \brief Returns a const iterator to the color following the last color of the Image.
          *
          * This color acts as a placeholder; attempting to access it results in undefined behavior.
          *
-         * Having a begin/end interface enables the Image class to be used with for range loops and the std <algorithm>
+         * Having a begin/end interface enables the Image class to be used with for range loops and the std `<algorithm>`
          * functions.
          *
          * \return const iterator to a color following the last color
          *
          *
          */
-        const color* end() const;
+        const Color* end() const;
 
     private:
         class ImageImpl;
-        std::unique_ptr<ImageImpl> impl;
+        std::shared_ptr<ImageImpl> impl{};
 
     private:
-        friend void draw_image(const Image& image, double x, double y) noexcept;
-        friend void draw_image(const Image& image, double x, double y, double width, double height) noexcept;
-        friend void draw_image(const Image& image, double x, double y, double width, double height) noexcept;
-        friend void draw_image(const Image& image, double x, double y, double width, double height, int texel_x,
-                               int texel_y) noexcept;
-        friend void draw_image(const Image& image, double x, double y, double width, double height, int texel_x,
-                               int texel_y, int texel_width, int texel_height) noexcept;
+        friend void  draw_image(const Image& image, double x, double y) noexcept;
+        friend void  draw_image(const Image& image, double x, double y, double width, double height) noexcept;
+        friend void  draw_image(const Image& image, double x, double y, double width, double height) noexcept;
+        friend void  draw_image(const Image& image, double x, double y, double width, double height, int texel_x,
+                                int texel_y) noexcept;
+        friend void  draw_image(const Image& image, double x, double y, double width, double height, int texel_x,
+                                int texel_y, int texel_width, int texel_height) noexcept;
+        friend Image end_drawing_to_image(bool smooth_texture);
+
+    private:
+        explicit Image(const std::shared_ptr<ImageImpl>& impl);
     };
     /** @} */
 }
