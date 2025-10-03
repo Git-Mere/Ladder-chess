@@ -67,6 +67,7 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d /s "$(ProjectDir)assets" "$(TargetDir)assets\\"
+xcopy /y /d /s "$(ProjectDir)Image" "$(TargetDir)Image\\"
 xcopy /y /d "$(SolutionDir)external\SFML\bin\openal32.dll" "$(TargetDir)"
 xcopy /y /d "$(SolutionDir)external\SFML\bin\sfml-audio-d-2.dll" "$(TargetDir)"
 xcopy /y /d "$(SolutionDir)external\SFML\bin\sfml-system-d-2.dll" "$(TargetDir)"</Command>
@@ -95,6 +96,7 @@ xcopy /y /d "$(SolutionDir)external\SFML\bin\sfml-system-d-2.dll" "$(TargetDir)"
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d /s "$(ProjectDir)assets" "$(TargetDir)assets\\"
+xcopy /y /d /s "$(ProjectDir)Image" "$(TargetDir)Image\\"
 xcopy /y /d "$(SolutionDir)external\SFML\bin\openal32.dll" "$(TargetDir)"
 xcopy /y /d "$(SolutionDir)external\SFML\bin\sfml-audio-2.dll" "$(TargetDir)"
 xcopy /y /d "$(SolutionDir)external\SFML\bin\sfml-system-2.dll" "$(TargetDir)"</Command>
